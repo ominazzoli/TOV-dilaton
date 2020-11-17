@@ -94,7 +94,8 @@ log_active = False
 rho = np.array([rho_GR[0], rho_GR[1], rho_ER[0], rho_ER[1]])
 
 
-labels = ['GR (%.0f)' %rho[0], 'GR (%.0f)' %rho[1], 'ER (%.0f)' %rho[2], 'ER (%.0f)' %rho[3]]
+# labels = ['GR (%.0f)' %rho[0], 'GR (%.0f)' %rho[1], 'ER (%.0f)' %rho[2], 'ER (%.0f)' %rho[3]]
+labels = ['GR (%.0f)' %rho[0], 'GR (%.0f)' %rho[1], 'ER (%.0f), $Lm = -\\rho$' %rho[2], 'ER (%.0f), $Lm = -\\rho$' %rho[3]]
 rho = rho*cst.eV*10**6/(cst.c**2*cst.fermi**3)
 dilaton_active = [False, False, True, True]
 colors = ['blue', 'green', 'red', 'orange']
