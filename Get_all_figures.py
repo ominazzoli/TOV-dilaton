@@ -46,9 +46,11 @@ def findSameMass(mass):
         tov = TOV(iRho, PsiInit, PhiInit, radiusMax_in, radiusMax_out, Npoint, option, False, log_active)
         tov.ComputeTOV()
         massStar_GR = np.append(massStar_GR,tov.massStar)
+        radiusStar_GR = np.append(radiusStar_GR,tov.radiusStar)
         tov = TOV(iRho, PsiInit, PhiInit, radiusMax_in, radiusMax_out, Npoint, option, True, log_active)
         tov.ComputeTOV()
         massStar_ER = np.append(massStar_ER,tov.massStar)
+        radiusStar_ER = np.append(radiusStar_ER,tov.radiusStar)
     rho = np.array(rho)/(cst.eV*10**6/(cst.c**2*cst.fermi**3))
     # ER
     massStar_ER = massStar_ER/(1.989*10**30)-mass
@@ -59,8 +61,9 @@ def findSameMass(mass):
     if len(rho_ER)==0:
         print('no solution')
     else:
-        print('density in [MeV/fm^3]: ', rho_ER)
-        print('mass accuracy un %: ', sol_acc_ER)
+        print('ER: density in [MeV/fm^3]: ', rho_ER)
+        print('ER: mass accuracy un %: ', sol_acc_ER)
+        print('ER: radius in km', radiusStar_ER[ind]/1000.)
     # GR
     massStar_GR = massStar_GR/(1.989*10**30)-mass
     bool_sup_zero_GR = (massStar_GR>0)
@@ -70,8 +73,9 @@ def findSameMass(mass):
     if len(rho_GR)==0:
         print('no solution')
     else:
-        print('density in [MeV/fm^3]: ', rho_GR)
-        print('mass accuracy un %: ', sol_acc_GR)
+        print('GR: density in [MeV/fm^3]: ', rho_GR)
+        print('GR: mass accuracy un %: ', sol_acc_GR)
+        print('GR: radius in km', radiusStar_GR[ind]/1000.)
     return rho_ER, rho_GR
 
 
@@ -207,6 +211,8 @@ plt.axvline(x = radiusStar_ER[massADM_ER.index(np.max(massADM_ER))]/1000, color 
 plt.axhline(y = np.max(massStar_ER)/(1.989*10**30), color = 'tab:blue', linestyle='dashed', label=f'M_Max = {np.max(massStar_ER)/(1.989*10**30):.2f}')
 plt.axhline(y = np.max(massADM_ER)/(1.989*10**30), color = 'tab:green', linestyle='dashed', label=f'M_ADM_Max = {np.max(massADM_ER)/(1.989*10**30):.2f}')
 plt.title('Entangled Relativity, Lm =$-\\rho$')
+plt.xlabel('Radius (km)')
+plt.ylabel('Mass $M/M_{\odot}$')
 plt.legend()
 plt.savefig(f'figures/Fig_MvsR_ADM.png', dpi = 200)
 # plt.show()
